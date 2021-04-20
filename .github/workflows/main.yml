@@ -35,4 +35,4 @@ jobs:
           version: latest
           file: Dockerfile
           push: true
-          tags: ghcr.io/${GITHUB_REPOSITORY}:latest
+          tags: ghcr.io/${{ env.GITHUB_REPOSITORY }}:latest

@@ -18,5 +18,5 @@ jobs:
       - name: Deploy latest docker image to ghcr.io
         run: |
           echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
-          docker build -t "ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_REF#refs/*/}" .
-          docker push "ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_REF#refs/*/}"
+          docker build -t "ghcr.io/${{ env.GITHUB_REPOSITORY }}:${GITHUB_REF#refs/*/}" .
+          docker push "ghcr.io/${{ env.GITHUB_REPOSITORY }}:${GITHUB_REF#refs/*/}"
