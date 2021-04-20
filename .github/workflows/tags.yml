@@ -34,7 +34,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          version: latest
           file: Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository }}:{{ steps.get-ref.outputs.tag }}
