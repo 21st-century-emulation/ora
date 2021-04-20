@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    tags: '*'
+
+jobs:
+  build_all_images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test microservice
+        run: |
+          ./test.sh
+
+      - name: Deploy latest docker image to ghcr.io
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+          docker build -t "ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_REF#refs/*/}" .
+          docker push "ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_REF#refs/*/}"
