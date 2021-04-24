@@ -5,9 +5,9 @@ sleep 5
 
 RESULT=`curl -s --header "Content-Type: application/json" \
   --request POST \
-  --data '{"opcode":177,"state":{"a":51,"b":1,"c":15,"d":5,"e":15,"h":10,"l":2,"flags":{"sign":false,"zero":false,"auxCarry":false,"parity":false,"carry":true},"programCounter":1,"stackPointer":2,"cycles":0}}' \
+  --data '{"id":"abcd", "opcode":177,"state":{"a":51,"b":1,"c":15,"d":5,"e":15,"h":10,"l":2,"flags":{"sign":false,"zero":false,"auxCarry":false,"parity":false,"carry":true},"programCounter":1,"stackPointer":2,"cycles":0}}' \
   http://localhost:8080/api/v1/execute`
-EXPECTED='{"opcode":177,"state":{"a":63,"b":1,"c":15,"d":5,"e":15,"h":10,"l":2,"flags":{"sign":false,"zero":false,"auxCarry":false,"parity":true,"carry":false},"programCounter":1,"stackPointer":2,"cycles":4}}'
+EXPECTED='{"id":"abcd", "opcode":177,"state":{"a":63,"b":1,"c":15,"d":5,"e":15,"h":10,"l":2,"flags":{"sign":false,"zero":false,"auxCarry":false,"parity":true,"carry":false},"programCounter":1,"stackPointer":2,"cycles":4}}'
 
 docker kill ora
 
