@@ -27,7 +27,8 @@ struct CpuState {
     #[serde(rename = "stackPointer")] stack_pointer: u16,
     #[serde(rename = "programCounter")] program_counter: u16,
     cycles: u64,
-    flags: CpuFlags
+    flags: CpuFlags,
+    #[serde(rename = "interruptsEnabled")] interrupts_enabled: bool
 }
 
 #[derive(Deserialize, Serialize)]
