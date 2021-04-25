@@ -58,7 +58,7 @@ async fn execute(mut cpu: Cpu) -> Result<impl warp::Reply, warp::Rejection> {
             };
             let address = (u16::from(cpu.state.h) << 8) | u16::from(cpu.state.l);
 
-            match reqwest::get(format!("{}?address={}", read_api, address)).await {
+            match reqwest::get(format!("{}?id={}&address={}", read_api, cpu.id, address)).await {
                 Ok(result) => match result.text().await {
                     Ok(s) => s.as_str().parse::<u8>().unwrap(),
                     Err(e) => panic!("Invalid response from read memory API {}", e),
