@@ -1,18 +1,18 @@
-FROM rust:1.51 as builder
+FROM nimlang/nim:1.4.6-ubuntu AS build
 
-RUN USER=root cargo new --bin ora
-WORKDIR ./ora
-COPY ./Cargo.lock ./Cargo.toml ./
-RUN cargo build --release
-RUN rm src/*.rs
-COPY ./src ./src
-RUN rm ./target/release/deps/ora*
-RUN cargo build --release
+WORKDIR /app
 
-FROM ubuntu:20.04
+COPY ora.nimble ora.nimble
 
-RUN apt update && apt install -y libssl-dev
+RUN nimble refresh && nimble install
 
-COPY --from=builder /ora/target/release/ora .
-EXPOSE 8080
+COPY ora.nim ora.nim
+
+RUN nim c -d:useStdLib ora.nim
+
+FROM ubuntu:20.04 as runtime
+
+WORKDIR /app
+COPY --from=build /app/ora ./ora
+
 ENTRYPOINT ["./ora"]
